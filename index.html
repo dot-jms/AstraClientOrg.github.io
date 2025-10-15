@@ -37,24 +37,11 @@
             font-weight: 400;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
-        canvas#bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            display: block;
-            filter: brightness(1.2) contrast(1.1);
-        }
+        canvas#bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: block; filter: brightness(1.2) contrast(1.1); }
 
-        .vignette {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
+        .vignette { position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background:
                 radial-gradient(50% 50% at 20% 20%, rgba(150,85,255,0.25), transparent 30%),
                 radial-gradient(60% 60% at 80% 80%, rgba(122,58,210,0.20), transparent 35%),
@@ -66,290 +53,71 @@
         }
 
         @keyframes vignette-dance {
-            0%, 100% { opacity: 1; transform: scale(1); }
+            0%,100% { opacity: 1; transform: scale(1); }
             33% { opacity: 0.9; transform: scale(1.02); }
             66% { opacity: 0.85; transform: scale(0.98); }
         }
 
-        .particles {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(142,246,193,0.6);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(100px) scale(1); opacity: 0; }
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: 2;
-            pointer-events: none;
-        }
+        .particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; width: 2px; height: 2px; background: rgba(142,246,193,0.6); border-radius: 50%; animation: float 15s infinite linear; }
+        @keyframes float { 0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-10vh) translateX(100px) scale(1);opacity:0;} }
 
         .notification {
-            position: relative;
-            z-index: 3;
-            background: linear-gradient(135deg, rgba(142,246,193,0.15), rgba(140,90,240,0.1));
-            border: 1px solid rgba(142,246,193,0.3);
-            border-radius: 16px;
-            padding: 16px 24px;
-            margin: 32px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            animation: grand-entrance 1.2s cubic-bezier(0.23,1,0.320,1);
+            position: relative; z-index: 3; background: linear-gradient(135deg, rgba(142,246,193,0.15), rgba(140,90,240,0.1));
+            border: 1px solid rgba(142,246,193,0.3); border-radius: 16px; padding: 16px 24px; margin: 32px; text-align:center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3); animation: grand-entrance 1.2s cubic-bezier(0.23,1,0.320,1);
         }
 
-        @keyframes grand-entrance {
-            0% { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
-            50% { opacity: 0.8; transform: translateY(10px) scale(0.98); filter: blur(2px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
+        @keyframes grand-entrance { 0%{opacity:0;transform:translateY(40px) scale(0.95);filter:blur(10px);}50%{opacity:0.8;transform:translateY(10px) scale(0.98);filter:blur(2px);}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);} }
 
-        .notification p {
-            margin: 0;
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 15px;
-        }
+        .notification p { margin:0; color:var(--accent); font-weight:600; font-size:15px; }
 
-        #main_content_area {
-            position: relative;
-            z-index: 3;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 32px 32px 32px;
-        }
+        #main_content_area { position: relative; z-index: 3; max-width: 1200px; margin: 0 auto; padding: 0 32px 32px 32px; }
 
         #play_view {
-            background: var(--gradient-glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: var(--shadow-epic);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            position: relative;
-            animation: grand-entrance 1.2s cubic-bezier(0.23,1,0.320,1);
+            background: var(--gradient-glass); border:1px solid var(--glass-border); border-radius:24px; padding:28px;
+            box-shadow: var(--shadow-epic); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); position: relative;
         }
 
         #play_view::before {
-            content: "";
-            position: absolute;
-            inset: -15px;
-            border-radius: 28px;
-            z-index: -1;
+            content:""; position:absolute; inset:-15px; border-radius:28px; z-index:-1;
             background: linear-gradient(135deg, var(--purple-strong), var(--purple-glow), rgba(142,246,193,0.1));
-            filter: blur(25px);
-            pointer-events: none;
-            animation: glow-breathe 6s ease-in-out infinite;
+            filter: blur(25px); pointer-events:none; animation: glow-breathe 6s ease-in-out infinite;
         }
 
-        @keyframes glow-breathe {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
+        @keyframes glow-breathe { 0%,100%{opacity:0.8;transform:scale(1);}50%{opacity:1;transform:scale(1.05);} }
 
-        .page_title_header {
-            margin-bottom: 32px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            position: relative;
-        }
+        .page_title_header { margin-bottom:32px; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); position:relative; }
+        .page_title_header::after { content:""; position:absolute; bottom:-1px; left:0; width:120px; height:2px; background:var(--gradient-accent); border-radius:2px; animation: accent-slide 3s ease-in-out infinite; }
+        @keyframes accent-slide { 0%,100%{width:120px;opacity:1;}50%{width:250px;opacity:0.7;} }
 
-        .page_title_header::after {
-            content: "";
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 120px;
-            height: 2px;
-            background: var(--gradient-accent);
-            border-radius: 2px;
-            animation: accent-slide 3s ease-in-out infinite;
-        }
+        .page_title_header h1 { margin:0; font-size:32px; font-weight:900; background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, #a855f7 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:-0.5px; text-shadow:0 0 30px rgba(142,246,193,0.3); }
 
-        @keyframes accent-slide {
-            0%, 100% { width: 120px; opacity: 1; }
-            50% { width: 250px; opacity: 0.7; }
-        }
+        .play-grid-layout { display:grid; gap:24px; }
 
-        .page_title_header h1 {
-            margin: 0;
-            font-size: 32px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, #a855f7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 30px rgba(142,246,193,0.3);
-        }
+        .play-card-item { background: var(--gradient-glass); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:24px; backdrop-filter: blur(15px); box-shadow: var(--shadow-medium); position:relative; overflow:hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .play-card-item::before { content:''; position:absolute; inset:-2px; border-radius:22px; background: linear-gradient(45deg, transparent, rgba(142,246,193,0.1), transparent, rgba(150,85,255,0.1), transparent); z-index:-1; opacity:0; transition: opacity 0.3s ease; }
+        .play-card-item:hover::before { opacity:1; animation: border-dance 2s linear infinite; }
+        @keyframes border-dance { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+        .play-card-item:hover { background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)); transform:translateY(-4px); box-shadow: var(--shadow-epic); border-color: rgba(255,255,255,0.15); }
 
-        .play-grid-layout {
-            display: grid;
-            gap: 24px;
-        }
+        .play-card-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .play-card-header i { font-size:28px; color:var(--accent); filter: drop-shadow(0 0 10px rgba(142,246,193,0.4)); }
+        .play-card-header h3 { margin:0; font-size:22px; font-weight:800; color:#f1f5f9; }
 
-        .play-card-item {
-            background: var(--gradient-glass);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 24px;
-            backdrop-filter: blur(15px);
-            box-shadow: var(--shadow-medium);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .client-options-list { display:flex; flex-direction:column; gap:12px; }
 
-        .play-card-item::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 22px;
-            background: linear-gradient(45deg, transparent, rgba(142,246,193,0.1), transparent, rgba(150,85,255,0.1), transparent);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+        .client-version-item { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; transition: all 0.3s ease; }
+        .client-version-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(142,246,193,0.2); transform: translateX(4px); }
+        .client-version-item span { font-weight:600; font-size:15px; color:#f1f5f9; }
 
-        .play-card-item:hover::before {
-            opacity: 1;
-            animation: border-dance 2s linear infinite;
-        }
+        .play-action-btn, .download-btn { padding:10px 24px; border-radius:10px; border:none; background:var(--gradient-accent); color:#0a0a0a; font-weight:700; font-size:14px; cursor:pointer; transition: all 0.3s ease; box-shadow:0 4px 15px rgba(142,246,193,0.2); text-decoration:none; display:inline-block; font-family:inherit; }
+        .play-action-btn:hover, .download-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 25px rgba(142,246,193,0.4); }
+        .play-action-btn:active, .download-btn:active { transform: translateY(0) scale(0.98); }
+        .play-action-btn[aria-busy="true"] { opacity:0.8; cursor:wait; transform:none; box-shadow:none; }
 
-        @keyframes border-dance {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .play-card-item:hover {
-            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-epic);
-            border-color: rgba(255,255,255,0.15);
-        }
-
-        .play-card-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .play-card-header i {
-            font-size: 28px;
-            color: var(--accent);
-            filter: drop-shadow(0 0 10px rgba(142,246,193,0.4));
-        }
-
-        .play-card-header h3 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 800;
-            color: #f1f5f9;
-        }
-
-        .client-options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .client-version-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .client-version-item:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(142,246,193,0.2);
-            transform: translateX(4px);
-        }
-
-        .client-version-item span {
-            font-weight: 600;
-            font-size: 15px;
-            color: #f1f5f9;
-        }
-
-        .play-action-btn, .download-btn {
-            padding: 10px 24px;
-            border-radius: 10px;
-            border: none;
-            background: var(--gradient-accent);
-            color: #0a0a0a;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(142,246,193,0.2);
-            text-decoration: none;
-            display: inline-block;
-            font-family: inherit;
-        }
-
-        .play-action-btn:hover, .download-btn:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(142,246,193,0.4);
-        }
-
-        .play-action-btn:active, .download-btn:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .play-action-btn[aria-busy="true"] {
-            opacity: 0.8;
-            cursor: wait;
-            transform: none;
-            box-shadow: none;
-        }
-
-        @media (max-width: 920px) {
-            #main_content_area { padding: 0 24px 24px 24px; }
-            .notification { margin: 24px; }
-            #play_view { padding: 24px; }
-        }
-
-        @media (max-width: 480px) {
-            #main_content_area { padding: 0 20px 20px 20px; }
-            .notification { margin: 20px; }
-            #play_view { padding: 20px; }
-            .page_title_header h1 { font-size: 28px; }
-            .client-version-item {
-                flex-direction: column;
-                gap: 12px;
-                align-items: flex-start;
-            }
-            .play-action-btn, .download-btn {
-                width: 100%;
-            }
-        }
+        @media (max-width: 920px) { #main_content_area { padding: 0 24px 24px 24px; } .notification { margin: 24px; } #play_view { padding: 24px; } }
+        @media (max-width: 480px) { #main_content_area { padding: 0 20px 20px 20px; } .notification { margin: 20px; } #play_view { padding: 20px; } .page_title_header h1 { font-size: 28px; } .client-version-item { flex-direction: column; gap: 12px; align-items: flex-start; } .play-action-btn, .download-btn { width: 100%; } }
     </style>
 </head>
 <body>
@@ -357,7 +125,7 @@
     <div class="vignette" aria-hidden="true"></div>
     <div class="particles" aria-hidden="true"></div>
 
-    <div class="notification">
+    <div class="notification" role="status" aria-live="polite">
         <p>1.12.2 has not been released yet, and Social Features will come in v1.6.1.</p>
     </div>
 
@@ -373,15 +141,14 @@
                         <i class="fas fa-gamepad"></i>
                         <h3>Astra Client</h3>
                     </div>
-
                     <div class="client-options-list" id="clientOptions">
                         <div class="client-version-item">
                             <span>Version 1.12</span>
-                            <button class="play-action-btn" data-version="1.12" type="button" aria-describedby="launchStatus">Launch</button>
+                            <button class="play-action-btn" data-version="112" type="button" aria-describedby="launchStatus">Launch</button>
                         </div>
                         <div class="client-version-item">
                             <span>Version 1.8</span>
-                            <button class="play-action-btn" data-version="1.8" type="button" aria-describedby="launchStatus">Launch</button>
+                            <button class="play-action-btn" data-version="18" type="button" aria-describedby="launchStatus">Launch</button>
                         </div>
                     </div>
                 </div>
@@ -414,19 +181,157 @@
                 </div>
             </div>
 
-            <!-- Accessible status region for screen readers -->
-            <div id="launchStatus" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
-                <!-- messages will be injected here -->
-            </div>
+            <!-- hidden aria-live for launch messages -->
+            <div id="launchStatus" aria-live="polite" aria-atomic="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"></div>
         </div>
     </main>
 
     <script>
+    // Starfield background
+    (function(){
+        const canvas = document.getElementById('bg');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let w = canvas.width = innerWidth;
+        let h = canvas.height = innerHeight;
+
+        const STAR_COUNT = Math.floor((w*h)/2400);
+        const stars = [];
+        const nebula = [];
+
+        function rand(min,max){ return Math.random()*(max-min)+min }
+
+        for(let i=0;i<STAR_COUNT;i++){
+            stars.push({
+                x: Math.random()*w,
+                y: Math.random()*h,
+                z: rand(0.3,2.0),
+                r: rand(0.8,5.0),
+                vx: rand(-0.05,0.05),
+                vy: rand(-0.1,0.1),
+                t: Math.random()*20,
+                color: Math.random() > 0.88 ? 'rgba(142,246,193,0.9)' : Math.random() > 0.94 ? 'rgba(168,85,247,0.8)' : 'white',
+                twinkleSpeed: rand(0.5, 2.0)
+            });
+        }
+
+        for(let i=0;i<8;i++){
+            nebula.push({
+                x: Math.random()*w,
+                y: Math.random()*h,
+                r: rand(80,200),
+                vx: rand(-0.02,0.02),
+                vy: rand(-0.02,0.02),
+                opacity: rand(0.02,0.08),
+                color: Math.random() > 0.5 ? 'rgba(142,246,193,' : 'rgba(168,85,247,'
+            });
+        }
+
+        function resize(){
+            w = canvas.width = innerWidth;
+            h = canvas.height = innerHeight;
+        }
+        addEventListener('resize', resize);
+
+        function draw(){
+            ctx.clearRect(0,0,w,h);
+
+            const g1 = ctx.createRadialGradient(w*0.3,h*0.3,0,w*0.3,h*0.3,Math.max(w,h)*0.6);
+            g1.addColorStop(0,'rgba(10,8,20,0.15)');
+            g1.addColorStop(0.5,'rgba(6,4,14,0.25)');
+            g1            const g2 = ctx.createRadialGradient(w*0.7,h*0.7,0,w*0.7,h*0.7,Math.max(w,h)*0.5);
+            g2.addColorStop(0,'rgba(20,8,25,0.08)');
+            g2.addColorStop(1,'transparent');
+            ctx.fillStyle = g2;
+            ctx.fillRect(0,0,w,h);
+
+            const t = Date.now()/3200;
+
+            for(const n of nebula){
+                n.x += n.vx;
+                n.y += n.vy;
+
+                if(n.x < -n.r) n.x = w + n.r;
+                if(n.x > w + n.r) n.x = -n.r;
+                if(n.y < -n.r) n.y = h + n.r;
+                if(n.y > h + n.r) n.y = -n.r;
+
+                const pulse = Math.abs(Math.sin(t * 0.3 + n.x * 0.001));
+                ctx.beginPath();
+                ctx.globalAlpha = Math.max(0, n.opacity * pulse);
+                const g = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
+                g.addColorStop(0, n.color + (n.opacity * 2) + ')');
+                g.addColorStop(1, 'transparent');
+                ctx.fillStyle = g;
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+                ctx.fill();
+            }
+
+            for(const s of stars){
+                s.x += s.vx * (s.z*2);
+                s.y += s.vy * (s.z*2);
+
+                const twinkle = Math.abs(Math.sin(t * s.twinkleSpeed + s.t)) *
+                               Math.abs(Math.cos(t * s.twinkleSpeed * 0.7 + s.t * 0.5));
+
+                if(s.x < 0) s.x = w;
+                if(s.x > w) s.x = 0;
+                if(s.y < 0) s.y = h;
+                if(s.y > h) s.y = 0;
+
+                ctx.beginPath();
+                ctx.globalAlpha = 0.7 + 0.3 * s.z * (0.3 + twinkle*0.7);
+                ctx.fillStyle = s.color;
+                ctx.arc(s.x, s.y, s.r * s.z, 0, Math.PI*2);
+                ctx.fill();
+
+                if(s.r > 3 || s.color !== 'white'){
+                    ctx.beginPath();
+                    ctx.globalAlpha = 0.15 * s.z * twinkle;
+                    ctx.arc(s.x, s.y, s.r * s.z * 3, 0, Math.PI*2);
+                    ctx.fill();
+                }
+
+                ctx.globalAlpha = 1;
+            }
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // Floating particles
+    (function createParticles(){
+        const container = document.querySelector('.particles');
+        if(!container) return;
+
+        function createParticle(){
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = Math.random() * 100 + 'vh';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(particle);
+
+            // remove after animation to avoid DOM bloat
+            setTimeout(() => { particle.remove(); }, 22000);
+        }
+
+        for(let i = 0; i < 12; i++){
+            setTimeout(createParticle, i * 300);
+        }
+
+        setInterval(createParticle, 2000);
+    })();
+    </script>
+
+    <script>
     /**************************************************************
-     * Button wiring: attach click handlers for Launch buttons
-     * - Delegation on #clientOptions
-     * - Prevent double clicks, set aria-busy while "launching"
-     * - Announce to aria-live region for screen readers
+     * Launch button wiring (accessible + identical behavior)
+     * - Reads data-version (112 -> 1.12, 18 -> 1.8)
+     * - Shows Launching..., sets aria-busy, announces to aria-live
+     * - Redirects to the same pages as the simplified example
      **************************************************************/
     (function () {
         const container = document.getElementById('clientOptions');
@@ -434,73 +339,72 @@
 
         if (!container) return;
 
-        /**
-         * announce to aria-live and console
-         * @param {string} message
-         */
-        function announce(message) {
+        function announce(msg) {
             if (statusRegion) {
-                // clear then set to ensure assistive tech notices updates
                 statusRegion.textContent = '';
-                // small timeout improves reliability on some screen readers
-                setTimeout(() => { statusRegion.textContent = message; }, 50);
+                // small delay helps some screen readers detect changes
+                setTimeout(() => { statusRegion.textContent = msg; }, 60);
             }
-            console.info('[Launcher]', message);
+            console.info('[AstraLauncher]', msg);
         }
 
-        /**
-         * simulate launching operation
-         * Replace this with your real launch logic (fetch, wasm boot, navigate, etc.)
-         * @param {HTMLButtonElement} btn
-         */
-        function handleLaunch(btn) {
-            const version = btn.getAttribute('data-version') || 'unknown';
-            // disable and mark busy
-            btn.setAttribute('disabled', 'true');
-            btn.setAttribute('aria-busy', 'true');
+        function mapVersionToPath(version) {
+            // map numeric data-version to path used in your simple site
+            if (version === '112' || version === '1.12' || version === '1.12.0') return '/play/1.12/index.html';
+            if (version === '18' || version === '1.8' || version === '1.8.0') return '/play/1.8/index.html';
+            // fallback: try to normalize '112' -> '1.12'
+            if (/^\d+$/.test(version) && version.length === 3) {
+                // e.g. 112 => 1.12
+                const major = version[0];
+                const minor = version.slice(1);
+                return `/play/${major}.${minor}/index.html`;
+            }
+            return null;
+        }
+
+        function doLaunch(button, version) {
+            const path = mapVersionToPath(version);
+            button.setAttribute('disabled', 'true');
+            button.setAttribute('aria-busy', 'true');
+            const prevText = button.textContent;
+            button.textContent = 'Launching...';
             announce(`Launching Astra Client version ${version}...`);
 
-            // Example: pretend to perform async init (replace with real action)
-            const LAUNCH_SIM_MS = 1400;
+            // small polish delay so users see the feedback
             setTimeout(() => {
-                try {
-                    // simulate success
-                    announce(`Astra Client ${version} launched successfully.`);
-                    // visual feedback:
-                    btn.textContent = 'Launched';
-                    // keep it disabled for a short time then restore (adjust as needed)
+                if (path) {
+                    // final announce for SRs (may not be necessary, but helpful)
+                    announce(`Opening ${path}`);
+                    // redirect
+                    window.location.href = path;
+                } else {
+                    announce('Unknown version — cannot launch.');
+                    console.error('Unknown version mapping for', version);
+                    button.textContent = 'Error';
                     setTimeout(() => {
-                        btn.removeAttribute('disabled');
-                        btn.removeAttribute('aria-busy');
-                        btn.textContent = 'Launch';
-                    }, 1000);
-                } catch (err) {
-                    console.error('Launch failed', err);
-                    announce(`Failed to launch version ${version}. See console for details.`);
-                    btn.removeAttribute('disabled');
-                    btn.removeAttribute('aria-busy');
+                        button.removeAttribute('disabled');
+                        button.removeAttribute('aria-busy');
+                        button.textContent = prevText;
+                    }, 1500);
                 }
-            }, LAUNCH_SIM_MS);
+            }, 600);
         }
 
-        // Event delegation: handle click for any .play-action-btn inside container
         container.addEventListener('click', (ev) => {
             const btn = ev.target.closest('.play-action-btn');
             if (!btn || !container.contains(btn)) return;
 
-            // if already disabled/busy, ignore click
             if (btn.hasAttribute('disabled') || btn.getAttribute('aria-busy') === 'true') {
-                announce('Launch already in progress — please wait.');
+                announce('Launch already in progress.');
                 return;
             }
 
-            // Prevent default behavior (if any) and run handler
             ev.preventDefault();
-            handleLaunch(btn);
+            const version = btn.getAttribute('data-version') || 'unknown';
+            doLaunch(btn, version);
         });
 
-        // Keyboard accessibility: allow Enter/Space when focused (buttons already handle this,
-        // but this is a defensive enhancement for any styling that converted buttons to non-buttons)
+        // keyboard defensiveness
         container.addEventListener('keydown', (ev) => {
             if (ev.key === 'Enter' || ev.key === ' ') {
                 const btn = ev.target.closest('.play-action-btn');
@@ -511,19 +415,25 @@
             }
         });
 
-        // Optional: expose a global hook for your real app to call when the real launch completes
-        window.__AstraLauncher__ = {
-            announce,
-            startLaunchForVersion(v) {
-                const btn = container.querySelector(`.play-action-btn[data-version="${v}"]`);
-                if (btn) handleLaunch(btn);
+        // expose a programmatic API
+        window.launchAstraVersion = function(versionString){
+            const btn = container.querySelector(`.play-action-btn[data-version="${versionString}"]`);
+            if (!btn) {
+                console.warn('No button found for version', versionString);
+                const mapped = mapVersionToPath(versionString);
+                if (mapped) {
+                    window.location.href = mapped;
+                }
+                return;
             }
+            if (btn.hasAttribute('disabled') || btn.getAttribute('aria-busy') === 'true') {
+                console.warn('Button busy for version', versionString);
+                return;
+            }
+            doLaunch(btn, versionString);
         };
-
     })();
     </script>
-
-    <!-- Removed the external app.js reference to avoid a missing-file runtime error.
-         If you have real app.js, re-add it AFTER the above script or merge its logic here. -->
 </body>
 </html>
+
