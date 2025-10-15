@@ -1,6 +1,8 @@
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Astra Client - Play</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -321,6 +323,13 @@
             transform: translateY(0) scale(0.98);
         }
 
+        .play-action-btn[aria-busy="true"] {
+            opacity: 0.8;
+            cursor: wait;
+            transform: none;
+            box-shadow: none;
+        }
+
         @media (max-width: 920px) {
             #main_content_area { padding: 0 24px 24px 24px; }
             .notification { margin: 24px; }
@@ -351,29 +360,33 @@
     <div class="notification">
         <p>1.12.2 has not been released yet, and Social Features will come in v1.6.1.</p>
     </div>
+
     <main id="main_content_area">
         <div id="play_view">
             <div class="page_title_header">
                 <h1>Select a Version</h1>
             </div>
+
             <div class="play-grid-layout">
                 <div class="play-card-item">
                     <div class="play-card-header">
                         <i class="fas fa-gamepad"></i>
                         <h3>Astra Client</h3>
                     </div>
-                    <div class="client-options-list">
+
+                    <div class="client-options-list" id="clientOptions">
                         <div class="client-version-item">
                             <span>Version 1.12</span>
-                            <button class="play-action-btn" data-version="112">Launch</button>
+                            <button class="play-action-btn" data-version="1.12" type="button" aria-describedby="launchStatus">Launch</button>
                         </div>
                         <div class="client-version-item">
                             <span>Version 1.8</span>
-                            <button class="play-action-btn" data-version="18">Launch</button>
+                            <button class="play-action-btn" data-version="1.8" type="button" aria-describedby="launchStatus">Launch</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="play-grid-layout" style="margin-top: 20px;">
                 <div class="play-card-item">
                     <div class="play-card-header">
@@ -400,150 +413,117 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Accessible status region for screen readers -->
+            <div id="launchStatus" aria-live="polite" aria-atomic="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+                <!-- messages will be injected here -->
+            </div>
         </div>
     </main>
+
     <script>
-        // Starfield background
-        (function(){
-            const canvas = document.getElementById('bg');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let w = canvas.width = innerWidth;
-            let h = canvas.height = innerHeight;
+    /**************************************************************
+     * Button wiring: attach click handlers for Launch buttons
+     * - Delegation on #clientOptions
+     * - Prevent double clicks, set aria-busy while "launching"
+     * - Announce to aria-live region for screen readers
+     **************************************************************/
+    (function () {
+        const container = document.getElementById('clientOptions');
+        const statusRegion = document.getElementById('launchStatus');
 
-            const STAR_COUNT = Math.floor((w*h)/2400);
-            const stars = [];
-            const nebula = [];
-            
-            function rand(min,max){ return Math.random()*(max-min)+min }
-            
-            for(let i=0;i<STAR_COUNT;i++){
-                stars.push({
-                    x: Math.random()*w,
-                    y: Math.random()*h,
-                    z: rand(0.3,2.0),
-                    r: rand(0.8,5.0),
-                    vx: rand(-0.05,0.05),
-                    vy: rand(-0.1,0.1),
-                    t: Math.random()*20,
-                    color: Math.random() > 0.88 ? 'rgba(142,246,193,0.9)' : 
-                           Math.random() > 0.94 ? 'rgba(168,85,247,0.8)' : 'white',
-                    twinkleSpeed: rand(0.5, 2.0)
-                });
+        if (!container) return;
+
+        /**
+         * announce to aria-live and console
+         * @param {string} message
+         */
+        function announce(message) {
+            if (statusRegion) {
+                // clear then set to ensure assistive tech notices updates
+                statusRegion.textContent = '';
+                // small timeout improves reliability on some screen readers
+                setTimeout(() => { statusRegion.textContent = message; }, 50);
             }
+            console.info('[Launcher]', message);
+        }
 
-            for(let i=0;i<8;i++){
-                nebula.push({
-                    x: Math.random()*w,
-                    y: Math.random()*h,
-                    r: rand(80,200),
-                    vx: rand(-0.02,0.02),
-                    vy: rand(-0.02,0.02),
-                    opacity: rand(0.02,0.08),
-                    color: Math.random() > 0.5 ? 'rgba(142,246,193,' : 'rgba(168,85,247,'
-                });
-            }
+        /**
+         * simulate launching operation
+         * Replace this with your real launch logic (fetch, wasm boot, navigate, etc.)
+         * @param {HTMLButtonElement} btn
+         */
+        function handleLaunch(btn) {
+            const version = btn.getAttribute('data-version') || 'unknown';
+            // disable and mark busy
+            btn.setAttribute('disabled', 'true');
+            btn.setAttribute('aria-busy', 'true');
+            announce(`Launching Astra Client version ${version}...`);
 
-            function resize(){
-                w = canvas.width = innerWidth;
-                h = canvas.height = innerHeight;
-            }
-            addEventListener('resize', resize);
-
-            function draw(){
-                ctx.clearRect(0,0,w,h);
-                
-                const g1 = ctx.createRadialGradient(w*0.3,h*0.3,0,w*0.3,h*0.3,Math.max(w,h)*0.6);
-                g1.addColorStop(0,'rgba(10,8,20,0.15)');
-                g1.addColorStop(0.5,'rgba(6,4,14,0.25)');
-                g1.addColorStop(1,'rgba(2,2,8,0.35)');
-                ctx.fillStyle = g1;
-                ctx.fillRect(0,0,w,h);
-
-                const g2 = ctx.createRadialGradient(w*0.7,h*0.7,0,w*0.7,h*0.7,Math.max(w,h)*0.5);
-                g2.addColorStop(0,'rgba(20,8,25,0.08)');
-                g2.addColorStop(1,'transparent');
-                ctx.fillStyle = g2;
-                ctx.fillRect(0,0,w,h);
-
-                const t = Date.now()/3200;
-                
-                for(const n of nebula){
-                    n.x += n.vx;
-                    n.y += n.vy;
-                    
-                    if(n.x < -n.r) n.x = w + n.r;
-                    if(n.x > w + n.r) n.x = -n.r;
-                    if(n.y < -n.r) n.y = h + n.r;
-                    if(n.y > h + n.r) n.y = -n.r;
-                    
-                    const pulse = Math.abs(Math.sin(t * 0.3 + n.x * 0.001));
-                    ctx.beginPath();
-                    ctx.globalAlpha = Math.max(0, n.opacity * pulse);
-                    const g = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
-                    g.addColorStop(0, n.color + (n.opacity * 2) + ')');
-                    g.addColorStop(1, 'transparent');
-                    ctx.fillStyle = g;
-                    ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-                    ctx.fill();
+            // Example: pretend to perform async init (replace with real action)
+            const LAUNCH_SIM_MS = 1400;
+            setTimeout(() => {
+                try {
+                    // simulate success
+                    announce(`Astra Client ${version} launched successfully.`);
+                    // visual feedback:
+                    btn.textContent = 'Launched';
+                    // keep it disabled for a short time then restore (adjust as needed)
+                    setTimeout(() => {
+                        btn.removeAttribute('disabled');
+                        btn.removeAttribute('aria-busy');
+                        btn.textContent = 'Launch';
+                    }, 1000);
+                } catch (err) {
+                    console.error('Launch failed', err);
+                    announce(`Failed to launch version ${version}. See console for details.`);
+                    btn.removeAttribute('disabled');
+                    btn.removeAttribute('aria-busy');
                 }
-                
-                for(const s of stars){
-                    s.x += s.vx * (s.z*2);
-                    s.y += s.vy * (s.z*2);
-                    
-                    const twinkle = Math.abs(Math.sin(t * s.twinkleSpeed + s.t)) * 
-                                   Math.abs(Math.cos(t * s.twinkleSpeed * 0.7 + s.t * 0.5));
-                    
-                    if(s.x<0) s.x = w;
-                    if(s.x>w) s.x = 0;
-                    if(s.y<0) s.y = h;
-                    if(s.y>h) s.y = 0;
-                    
-                    ctx.beginPath();
-                    ctx.globalAlpha = 0.7 + 0.3 * s.z * (0.3 + twinkle*0.7);
-                    ctx.fillStyle = s.color;
-                    ctx.arc(s.x, s.y, s.r * s.z, 0, Math.PI*2);
-                    ctx.fill();
-                    
-                    if(s.r > 3 || s.color !== 'white'){
-                        ctx.beginPath();
-                        ctx.globalAlpha = 0.15 * s.z * twinkle;
-                        ctx.arc(s.x, s.y, s.r * s.z * 3, 0, Math.PI*2);
-                        ctx.fill();
-                    }
-                    
-                    ctx.globalAlpha = 1;
-                }
-                requestAnimationFrame(draw);
-            }
-            draw();
-        })();
+            }, LAUNCH_SIM_MS);
+        }
 
-        // Floating particles
-        (function createParticles(){
-            const container = document.querySelector('.particles');
-            if(!container) return;
-            
-            function createParticle(){
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(particle);
-                
-                setTimeout(() => {
-                    particle.remove();
-                }, 20000);
+        // Event delegation: handle click for any .play-action-btn inside container
+        container.addEventListener('click', (ev) => {
+            const btn = ev.target.closest('.play-action-btn');
+            if (!btn || !container.contains(btn)) return;
+
+            // if already disabled/busy, ignore click
+            if (btn.hasAttribute('disabled') || btn.getAttribute('aria-busy') === 'true') {
+                announce('Launch already in progress — please wait.');
+                return;
             }
-            
-            for(let i = 0; i < 12; i++){
-                setTimeout(createParticle, i * 1000);
+
+            // Prevent default behavior (if any) and run handler
+            ev.preventDefault();
+            handleLaunch(btn);
+        });
+
+        // Keyboard accessibility: allow Enter/Space when focused (buttons already handle this,
+        // but this is a defensive enhancement for any styling that converted buttons to non-buttons)
+        container.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+                const btn = ev.target.closest('.play-action-btn');
+                if (btn && !btn.hasAttribute('disabled')) {
+                    ev.preventDefault();
+                    btn.click();
+                }
             }
-            
-            setInterval(createParticle, 2000);
-        })();
+        });
+
+        // Optional: expose a global hook for your real app to call when the real launch completes
+        window.__AstraLauncher__ = {
+            announce,
+            startLaunchForVersion(v) {
+                const btn = container.querySelector(`.play-action-btn[data-version="${v}"]`);
+                if (btn) handleLaunch(btn);
+            }
+        };
+
+    })();
     </script>
-    <script src="app.js"></script>
-</body></html>
+
+    <!-- Removed the external app.js reference to avoid a missing-file runtime error.
+         If you have real app.js, re-add it AFTER the above script or merge its logic here. -->
+</body>
+</html>
